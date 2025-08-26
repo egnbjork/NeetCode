@@ -1,31 +1,18 @@
-from sortedcontainers import SortedDict
-from collections import defaultdict
-
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count_nums = SortedDict()
-        for i in nums:
-            count_nums[i] = count_nums.get(i, 0) + 1
+        count_nums = {}
+        for n in nums:
+            count_nums[n] = (count_nums.get(n, 0) + 1)
 
-        if len(count_nums) == 0:
-            return []
-        print(f"counted nums is {count_nums}")
+        freq = [[] for _ in range(len(nums) + 1)]
 
-        count_map = SortedDict()
-        for p, v in count_nums.items():
-            if v not in count_map:
-                count_map[v] = []
-            count_map[v].append(p)
-
-        print(f"count map is {count_map}")
-        print(list(reversed(count_map.values()))[:k])
-        print(k)
+        for num, count in count_nums.items():
+            freq[count].append(num)
 
         res = []
-        for sublist in list(reversed(count_map.values()))[:k]:
-            for num in sublist:
-                res.append(num)
-            if len(res) >= k:
-                break
+        for i in range(len(freq) -1, 0, -1):
+            for n in freq[i]:
+                res.append(n)
+                if (len(res) >= k):
+                    return res
         return res
-        
