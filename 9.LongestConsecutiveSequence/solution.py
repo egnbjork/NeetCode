@@ -4,22 +4,16 @@ class Solution:
             return 0
 
         longest_seq = 1
-        seq = 0
-        sorted_nums = sorted(nums)
-        last_num = sys.float_info.max
+        seq = 1
 
-        print(sorted_nums)
-        for num in sorted_nums:
-            if num - 1 == last_num:
+        for num in nums:
+            seq_num = num
+            while seq_num + 1 in nums:
                 seq = seq + 1
-                last_num = num
-            elif(num == last_num):
-                continue
-            else:
-                seq = 1
-                last_num = num
-            if seq > longest_seq:
-                longest_seq = seq
+                seq_num = seq_num + 1
+                if seq > longest_seq:
+                    longest_seq = seq
+            seq = 1
                 
         return longest_seq
         
