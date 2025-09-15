@@ -3,17 +3,23 @@ class Solution {
        Set<List<Integer>> solution = new HashSet<>();
        Arrays.sort(nums);
        for (int i = 0; i < nums.length; i++) {
-        for (int p = 0; p < nums.length; p++) {
-            for (int k = 0; k < nums.length; k++) {
-                if (i != p && p != k && i != k &&
-                (nums[i] + nums[p] + nums[k]) == 0) {
-                    List combinations = Arrays.asList(nums[i], nums[p], nums[k]);
-                    Collections.sort(combinations);
-                    solution.add((combinations));
+            if (i == 0 || (i != 0 && nums[i] != nums[i - 1])) {
+                int pointerS = i + 1;
+                int pointerM = nums.length - 1;
+                while (pointerS < pointerM) {
+                    if (nums[i] + nums[pointerS] + nums[pointerM] == 0) {
+                        System.out.println("found solution");
+                        solution.add(Arrays.asList(nums[i], nums[pointerS], nums[pointerM]));
+                        pointerS++;
+                        pointerM--;
+                    } else if (nums[i] + nums[pointerS] + nums[pointerM] > 0) {
+                        pointerM--;
+                    } else {
+                        pointerS++;
+                    }
+                }
                 }
             }
-        }
-       } 
        return new ArrayList(solution);
     }
 }
